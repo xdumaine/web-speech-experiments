@@ -4,6 +4,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+body * {
+  font-family: 'Lato', Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+
+  font-size: 20px;
+  color: #f6f6f6;
 }
 
 #start-listening {
@@ -14,7 +23,4 @@ body {
   border: none;
   background-image: radial-gradient(circle, #d6d6d6 -70%, #363636 70%);
   outline: none;
-  font-size: 20px;
-  color: #f6f6f6;
-  font-weight: lighter;
 }
