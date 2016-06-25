@@ -3,6 +3,8 @@
   startButton.onclick = startListening;
   let isListening = false;
 
+  let assistant, hal;
+
   const resultDiv = document.getElementById('result');
 
   const recognition = new window.webkitSpeechRecognition(); // eslint-disable-line
@@ -13,8 +15,9 @@
   const utterance = new window.SpeechSynthesisUtterance();
 
   window.speechSynthesis.onvoiceschanged = function () {
-    const voice = window.speechSynthesis.getVoices().filter(v => v.name === 'Google US English')[0];
-    utterance.voice = voice;
+    const voices = window.speechSynthesis.getVoices();
+    assistant = voices.filter(v => v.name === 'Google US English')[0];
+    hal = voices.filter(v => v.name === 'Daniel')[0];
   };
 
   recognition.onstart = function () {
@@ -41,9 +44,21 @@
   recognition.onend = function () {
     console.info('recognition ended');
 
+    if (finalTranscript.toLowerCase() === 'open the pod bay doors') {
+      startButton.style['background-image'] = 'radial-gradient(circle, white 0%, yellow 2%, red 15%, red 15%, black 52%, #363636 63%)';
+      startButton.innerHTML = '';
+      utterance.voice = hal;
+      utterance.text = "I'm Sorry, Dave, I'm afraid I can't do that.";
+    } else {
+      utterance.text = `I'll try to help with ${finalTranscript}`;
+      utterance.voice = assistant;
+      startButton.innerHTML = 'Start Listening';
+    }
+
+    window.speechSynthesis.speak(utterance);
+
     finalTranscript = '';
     startButton.style.opacity = '1';
-    startButton.innerHTML = 'Start Listening';
     isListening = false;
   };
 
@@ -73,8 +88,6 @@
       setResult(interimTranscript);
     } else if (finalTranscript) {
       setResult(finalTranscript);
-      utterance.text = `I'll try to help with ${finalTranscript}`;
-      window.speechSynthesis.speak(utterance);
       stopListening();
     }
   };
