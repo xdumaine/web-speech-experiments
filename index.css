@@ -1,0 +1,20 @@
+body {
+  font-family: sans-serif;
+  background-color: #363636;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#start-listening {
+  cursor: pointer;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: none;
+  background-image: radial-gradient(circle, #d6d6d6 -70%, #363636 70%);
+  outline: none;
+  font-size: 20px;
+  color: #f6f6f6;
+  font-weight: lighter;
+}
